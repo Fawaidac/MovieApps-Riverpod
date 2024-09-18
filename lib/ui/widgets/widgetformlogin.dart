@@ -76,6 +76,56 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
                         color: whiteColor,
                         fontWeight: FontWeight.bold),
                   )),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    height: 1,
+                    color: whiteColor,
+                  )),
+                  Text(
+                    "OR",
+                    style: AppFonts.poppins(
+                        fontSize: 14,
+                        color: whiteColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  Expanded(
+                      child: Container(
+                    height: 1,
+                    color: whiteColor,
+                  )),
+                ],
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1,
+                          color: whiteColor,
+                        ),
+                        borderRadius: BorderRadius.circular(10))),
+                child: Text(
+                  "Register",
+                  style: AppFonts.poppins(
+                      fontSize: 16,
+                      color: whiteColor,
+                      fontWeight: FontWeight.bold),
+                )),
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              "Copyright@2024",
+              style: AppFonts.poppins(
+                  fontSize: 12, color: whiteColor, fontWeight: FontWeight.w300),
             )
           ],
         ));
