@@ -1,7 +1,11 @@
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/core/widgets/customtextfield.dart';
+import 'package:fininite_riverpod/ui/home.dart';
+import 'package:fininite_riverpod/ui/register.dart';
+import 'package:fininite_riverpod/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class WidgetFormLogin extends StatefulWidget {
   const WidgetFormLogin({super.key});
@@ -37,6 +41,7 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = context.deviceSize;
     return Form(
         key: _formKey,
         child: Column(
@@ -47,9 +52,7 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
               controller: emailController,
               validator: _validateEmail,
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const Gap(15),
             CustomTextField(
               hintText: "Password",
               icon: Icons.lock,
@@ -62,7 +65,13 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
               height: 48,
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ));
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: blueColor,
                       shape: RoundedRectangleBorder(
@@ -86,12 +95,15 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
                     height: 1,
                     color: whiteColor,
                   )),
-                  Text(
-                    "OR",
-                    style: AppFonts.poppins(
-                        fontSize: 14,
-                        color: whiteColor,
-                        fontWeight: FontWeight.w400),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      "OR",
+                      style: AppFonts.poppins(
+                          fontSize: 14,
+                          color: whiteColor,
+                          fontWeight: FontWeight.w400),
+                    ),
                   ),
                   Expanded(
                       child: Container(
@@ -101,27 +113,35 @@ class _WidgetFormLoginState extends State<WidgetFormLogin> {
                 ],
               ),
             ),
-            ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 1,
-                          color: whiteColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10))),
-                child: Text(
-                  "Register",
-                  style: AppFonts.poppins(
-                      fontSize: 16,
-                      color: whiteColor,
-                      fontWeight: FontWeight.bold),
-                )),
-            const SizedBox(
-              height: 50,
+            Container(
+              height: 48,
+              width: deviceSize.width,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(),
+                        ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: whiteColor,
+                          ),
+                          borderRadius: BorderRadius.circular(10))),
+                  child: Text(
+                    "Register",
+                    style: AppFonts.poppins(
+                        fontSize: 16,
+                        color: whiteColor,
+                        fontWeight: FontWeight.bold),
+                  )),
             ),
+            const Gap(50),
             Text(
               "Copyright@2024",
               style: AppFonts.poppins(
