@@ -19,7 +19,7 @@ class WidgetFormLogin extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? _validateEmail(String? value) {
+    String? validateEmail(String? value) {
       if (value == null || value.isEmpty) {
         return 'Email tidak boleh kosong';
       }
@@ -29,7 +29,7 @@ class WidgetFormLogin extends ConsumerWidget {
       return null;
     }
 
-    String? _validatePassword(String? value) {
+    String? validatePassword(String? value) {
       if (value == null || value.isEmpty) {
         return 'Password tidak boleh kosong';
       }
@@ -39,7 +39,7 @@ class WidgetFormLogin extends ConsumerWidget {
       return null;
     }
 
-    void _loginUser() async {
+    void loginUser() async {
       if (_formKey.currentState!.validate()) {
         try {
           final authController = ref.read(authControllerProvider);
@@ -73,7 +73,7 @@ class WidgetFormLogin extends ConsumerWidget {
             hintText: "Email",
             icon: Icons.mail,
             controller: emailController,
-            validator: _validateEmail,
+            validator: validateEmail,
           ),
           const Gap(15),
           CustomTextField(
@@ -81,14 +81,14 @@ class WidgetFormLogin extends ConsumerWidget {
             icon: Icons.lock,
             isObs: true,
             controller: passwordController,
-            validator: _validatePassword,
+            validator: validatePassword,
           ),
           Container(
             margin: const EdgeInsets.only(top: 30),
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: _loginUser,
+              onPressed: loginUser,
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
                 shape: RoundedRectangleBorder(

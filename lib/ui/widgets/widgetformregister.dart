@@ -14,21 +14,21 @@ class WidgetFormRegister extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController nameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController confPasswordController =
         TextEditingController();
 
-    String? _validateName(String? value) {
+    String? validateName(String? value) {
       if (value == null || value.isEmpty) {
         return 'Name is required';
       }
       return null;
     }
 
-    String? _validateEmail(String? value) {
+    String? validateEmail(String? value) {
       if (value == null || value.isEmpty) {
         return 'Email is required';
       }
@@ -38,7 +38,7 @@ class WidgetFormRegister extends ConsumerWidget {
       return null;
     }
 
-    String? _validatePassword(String? value) {
+    String? validatePassword(String? value) {
       if (value == null || value.isEmpty) {
         return 'Password is required';
       }
@@ -48,7 +48,7 @@ class WidgetFormRegister extends ConsumerWidget {
       return null;
     }
 
-    String? _validateConfPassword(String? value) {
+    String? validateConfPassword(String? value) {
       if (value == null || value.isEmpty) {
         return 'Confirm password is required';
       }
@@ -61,8 +61,8 @@ class WidgetFormRegister extends ConsumerWidget {
       return null;
     }
 
-    void _registerUser() async {
-      if (_formKey.currentState!.validate()) {
+    void registerUser() async {
+      if (formKey.currentState!.validate()) {
         try {
           final authController = ref.read(authControllerProvider);
           final success = await authController.register(
@@ -90,21 +90,21 @@ class WidgetFormRegister extends ConsumerWidget {
     final deviceSize = context.deviceSize;
 
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         children: [
           CustomTextField(
             hintText: "Name",
             icon: Icons.person,
             controller: nameController,
-            validator: _validateName,
+            validator: validateName,
           ),
           const Gap(15),
           CustomTextField(
             hintText: "Email",
             icon: Icons.mail,
             controller: emailController,
-            validator: _validateEmail,
+            validator: validateEmail,
           ),
           const Gap(15),
           CustomTextField(
@@ -112,7 +112,7 @@ class WidgetFormRegister extends ConsumerWidget {
             icon: Icons.lock,
             isObs: true,
             controller: passwordController,
-            validator: _validatePassword,
+            validator: validatePassword,
           ),
           const Gap(15),
           CustomTextField(
@@ -120,14 +120,14 @@ class WidgetFormRegister extends ConsumerWidget {
             icon: Icons.lock,
             isObs: true,
             controller: confPasswordController,
-            validator: _validateConfPassword,
+            validator: validateConfPassword,
           ),
           const Gap(30),
           SizedBox(
             height: 48,
             width: deviceSize.width,
             child: ElevatedButton(
-                onPressed: _registerUser,
+                onPressed: registerUser,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: blueColor,
                     shadowColor: Colors.transparent,

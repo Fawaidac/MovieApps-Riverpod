@@ -1,6 +1,7 @@
 import 'package:fininite_riverpod/core/provider/db_provider.dart';
 import 'package:fininite_riverpod/core/repository/auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
   final Ref ref;
@@ -12,6 +13,8 @@ class AuthController {
     final user = await authRepository.login(email, password);
     if (user != null) {
       ref.read(authStateProvider.notifier).state = user;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
       return true;
     }
     return false;
@@ -24,5 +27,11 @@ class AuthController {
     } catch (e) {
       return false;
     }
+  }
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    ref.read(authStateProvider.notifier).state = null;
   }
 }
