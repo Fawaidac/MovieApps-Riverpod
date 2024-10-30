@@ -1,31 +1,36 @@
-import 'package:fininite_riverpod/core/controller/movie_controller.dart';
-import 'package:fininite_riverpod/core/repository/movie_repository.dart';
-import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/widget_top_rated_movie.dart';
 import 'package:fininite_riverpod/ui/widgets/widgettophome.dart';
+import 'package:fininite_riverpod/core/controller/movie_controller.dart';
 
-class HomeScreen extends ConsumerWidget {
-  // Change to ConsumerWidget
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Create the MovieController provider here
-    final movieController = ref.watch(movieControllerProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(movieControllerProvider.notifier).fetchTopRatedMovies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              WidgetTopHome(),
+              const WidgetTopHome(),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
@@ -48,8 +53,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              // Pass the provider reference to WidgetTopRatedMovie
-              WidgetTopRatedMovie(controller: movieController),
+              const TopRatedMovieWidget(),
             ],
           ),
         ),
