@@ -1,3 +1,5 @@
+import 'package:card_loading/card_loading.dart';
+import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:fininite_riverpod/core/controller/movie_controller.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
@@ -38,7 +40,7 @@ class _WidgetTopRatedMovieState extends State<WidgetTopRatedMovie> {
           ),
         ),
         SizedBox(
-          height: 250, // Adjust height as needed
+          height: 220,
           child: NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification scrollInfo) {
               if (!widget.controller.isLoading &&
@@ -50,15 +52,47 @@ class _WidgetTopRatedMovieState extends State<WidgetTopRatedMovie> {
               return true;
             },
             child: ListView.builder(
-              scrollDirection: Axis.horizontal, // Change to horizontal
-              itemCount:
-                  (widget.controller.topRatedMovies?.results?.length ?? 0) +
-                      (widget.controller.isLoading ? 1 : 0),
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.controller.isLoading
+                  ? 5
+                  : widget.controller.movie?.results?.length ?? 0,
               itemBuilder: (context, index) {
-                if (index <
-                    (widget.controller.topRatedMovies?.results?.length ?? 0)) {
-                  final movie =
-                      widget.controller.topRatedMovies!.results![index];
+                if (widget.controller.isLoading) {
+                  return Container(
+                    width: 120,
+                    margin: const EdgeInsets.only(right: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CardLoading(
+                          height: 170,
+                          width: 120,
+                          borderRadius: BorderRadius.circular(10),
+                          margin: const EdgeInsets.only(bottom: 5),
+                        ),
+                        CardLoading(
+                          height: 10,
+                          width: 120,
+                          borderRadius: BorderRadius.circular(5),
+                          margin: const EdgeInsets.only(bottom: 3),
+                        ),
+                        CardLoading(
+                          height: 10,
+                          width: 80,
+                          borderRadius: BorderRadius.circular(5),
+                          margin: const EdgeInsets.only(bottom: 3),
+                        ),
+                        CardLoading(
+                          height: 10,
+                          width: 100,
+                          borderRadius: BorderRadius.circular(5),
+                          margin: const EdgeInsets.only(bottom: 3),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  final movie = widget.controller.movie!.results![index];
                   return Container(
                     width: 120,
                     margin: const EdgeInsets.only(right: 8),
@@ -75,10 +109,10 @@ class _WidgetTopRatedMovieState extends State<WidgetTopRatedMovie> {
                                   height: 170,
                                 ),
                               )
-                            : Container(
+                            : CardLoading(
                                 height: 170,
                                 width: 120,
-                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10),
                               ),
                         const Gap(8),
                         Text(
@@ -94,13 +128,12 @@ class _WidgetTopRatedMovieState extends State<WidgetTopRatedMovie> {
                           style: AppFonts.montserrat(
                               fontSize: 10, color: whiteColor),
                         ),
+                        Text(
+                          formatDate(movie.releaseDate ?? ""),
+                          style: AppFonts.montserrat(
+                              fontSize: 10, color: whiteColor),
+                        ),
                       ],
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: whiteColor,
                     ),
                   );
                 }

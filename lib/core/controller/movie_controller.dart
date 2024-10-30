@@ -1,4 +1,4 @@
-import 'package:fininite_riverpod/core/model/top_rated_movie.dart';
+import 'package:fininite_riverpod/core/model/movie_model.dart';
 import 'package:fininite_riverpod/core/repository/movie_repository.dart';
 import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MovieController extends ChangeNotifier {
   final MovieRepository movieRepository;
 
-  TopRatedMovie? topRatedMovies;
+  Movie? movie;
   bool isLoading = false;
   bool hasMoreData = true;
   int currentPage = 1;
@@ -22,15 +22,34 @@ class MovieController extends ChangeNotifier {
 
     try {
       final newMovies = await movieRepository.fetchTopRatedMovies(currentPage);
-      if (topRatedMovies == null) {
-        topRatedMovies = newMovies;
+      if (movie == null) {
+        movie = newMovies;
       } else {
-        topRatedMovies!.results!.addAll(newMovies.results!);
+        movie!.results!.addAll(newMovies.results!);
       }
       currentPage++;
 
       if (newMovies.results!.length < 10) {
         hasMoreData = false;
+      }
+    } catch (error) {
+      throw Exception(error);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchPopularMovies() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final newMovies = await movieRepository.fetchPopularMovies(currentPage);
+      if (movie == null) {
+        movie = newMovies;
+      } else {
+        movie!.results!.addAll(newMovies.results!);
       }
     } catch (error) {
       throw Exception(error);
