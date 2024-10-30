@@ -7,8 +7,8 @@ import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TopRatedMovieWidget extends ConsumerWidget {
-  const TopRatedMovieWidget({super.key});
+class UpcomingMovieWidget extends ConsumerWidget {
+  const UpcomingMovieWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +23,7 @@ class TopRatedMovieWidget extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: Text(
-            'Top Rated Movies',
+            'Upcoming Movies',
             style: AppFonts.montserrat(
               fontSize: 16,
               color: whiteColor,
@@ -41,7 +41,7 @@ class TopRatedMovieWidget extends ConsumerWidget {
                       scrollInfo.metrics.maxScrollExtent) {
                 ref
                     .read(movieControllerProvider.notifier)
-                    .fetchTopRatedMovies();
+                    .fetchUpcomingMovies();
               }
               return true;
             },

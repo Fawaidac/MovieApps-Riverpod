@@ -1,3 +1,5 @@
+import 'package:fininite_riverpod/ui/widgets/movies/widget_popular_movie.dart';
+import 'package:fininite_riverpod/ui/widgets/movies/widget_upcoming_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
@@ -18,6 +20,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     ref.read(movieControllerProvider.notifier).fetchTopRatedMovies();
+    ref.read(movieControllerProvider.notifier).fetchPopularMovies();
+    ref.read(movieControllerProvider.notifier).fetchUpcomingMovies();
   }
 
   @override
@@ -41,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       color: whiteColor,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -54,6 +58,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
               ),
               const TopRatedMovieWidget(),
+              const PopularMovieWidget(),
+              const UpcomingMovieWidget(),
             ],
           ),
         ),
