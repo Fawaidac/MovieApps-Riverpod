@@ -2,10 +2,12 @@ import 'package:card_loading/card_loading.dart';
 import 'package:fininite_riverpod/core/controller/movie_controller.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
+import 'package:fininite_riverpod/ui/all_popular_movie.dart';
 import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class PopularMovieWidget extends ConsumerWidget {
   const PopularMovieWidget({super.key});
@@ -18,6 +20,7 @@ class PopularMovieWidget extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Gap(20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -30,7 +33,13 @@ class PopularMovieWidget extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AllPopularMovie(),
+                    ));
+              },
               child: Text(
                 'See More',
                 style: AppFonts.montserrat(
@@ -41,10 +50,12 @@ class PopularMovieWidget extends ConsumerWidget {
             ),
           ],
         ),
+        const Gap(20),
         SizedBox(
           height: 220,
           child: ListView.builder(
             itemCount: isLoading ? 5 : movies.length,
+            scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               if (isLoading) {
                 return _loadDataMovie();

@@ -21,7 +21,7 @@ class UpcomingMovieWidget extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20, top: 20),
           child: Text(
             'Upcoming Movies',
             style: AppFonts.montserrat(
