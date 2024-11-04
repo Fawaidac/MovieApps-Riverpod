@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fininite_riverpod/core/model/detail_movie_model.dart';
 import 'package:fininite_riverpod/core/model/movie_model.dart';
 import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,6 +47,19 @@ class MovieRepository {
       return Movie.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load upcoming movies');
+    }
+  }
+
+  Future<DetailMovie> getDetailMovie(int movieId) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/$movieId'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return DetailMovie.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load detail movies');
     }
   }
 }
