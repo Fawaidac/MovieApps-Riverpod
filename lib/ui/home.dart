@@ -1,6 +1,8 @@
 import 'package:fininite_riverpod/core/controller/popular_movie_controller.dart';
+import 'package:fininite_riverpod/core/controller/search_controller.dart';
 import 'package:fininite_riverpod/core/controller/top_rated_movie_controller.dart';
 import 'package:fininite_riverpod/core/controller/upcoming_movie_controller.dart';
+import 'package:fininite_riverpod/ui/search.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/widget_popular_movie.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/widget_upcoming_movie.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,8 @@ import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/widget_top_rated_movie.dart';
 import 'package:fininite_riverpod/ui/widgets/widgettophome.dart';
 
+final searchQueryProvider = StateProvider<String>((ref) => '');
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,12 +22,29 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  bool isSearching = false;
+  final searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     ref.read(topRatedControllerProvider.notifier).fetchTopRatedMovies();
     ref.read(popularControllerProvider.notifier).fetchPopularMovies();
     ref.read(upcomingControllerProvider.notifier).fetchUpcomingMovies();
+  }
+
+  void toggleSearch() {
+    Future.microtask(() {
+      if (mounted) {
+        setState(() {
+          isSearching = !isSearching;
+        });
+
+        if (!isSearching) {
+          FocusScope.of(context).unfocus();
+        }
+      }
+    });
   }
 
   @override
@@ -40,11 +61,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
+                  controller: searchController,
                   style: AppFonts.poppins(fontSize: 14, color: whiteColor),
+                  onTap: () {
+                    if (!isSearching) {
+                      toggleSearch();
+                    }
+                  },
+                  onChanged: (value) {
+                    ref.read(searchQueryProvider.notifier).state = value;
+                    ref
+                        .read(searchControllerProvider.notifier)
+                        .fetchSearchMovie(value);
+                  },
                   decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: whiteColor,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        isSearching ? Icons.close : Icons.search,
+                        color: whiteColor,
+                      ),
+                      onPressed: toggleSearch,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Colors.grey),
@@ -59,9 +95,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
-              const TopRatedMovieWidget(),
-              const PopularMovieWidget(),
-              const UpcomingMovieWidget(),
+              Visibility(
+                visible: isSearching,
+                child: const SearchScreen(),
+              ),
+              Visibility(
+                visible: !isSearching,
+                child: const Column(
+                  children: [
+                    TopRatedMovieWidget(),
+                    PopularMovieWidget(),
+                    UpcomingMovieWidget(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
