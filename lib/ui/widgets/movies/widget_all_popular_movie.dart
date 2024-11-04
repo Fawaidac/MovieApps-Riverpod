@@ -1,5 +1,5 @@
 import 'package:card_loading/card_loading.dart';
-import 'package:fininite_riverpod/core/controller/movie_controller.dart';
+import 'package:fininite_riverpod/core/controller/popular_movie_controller.dart';
 import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
@@ -12,9 +12,10 @@ class AllPopularMovieWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(movieControllerProvider);
-    final isLoading = ref.watch(movieControllerProvider.notifier).isLoading;
-    final hasMoreData = ref.watch(movieControllerProvider.notifier).hasMoreData;
+    final controller = ref.watch(popularControllerProvider);
+    final isLoading = ref.watch(popularControllerProvider.notifier).isLoading;
+    final hasMoreData =
+        ref.watch(popularControllerProvider.notifier).hasMoreData;
     final movies = controller?.results ?? [];
 
     return Expanded(
@@ -23,7 +24,7 @@ class AllPopularMovieWidget extends ConsumerWidget {
           if (!isLoading &&
               hasMoreData &&
               scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-            ref.read(movieControllerProvider.notifier).fetchAllPopularMovies();
+            ref.read(popularControllerProvider.notifier).fetchPopularMovies();
           }
           return true;
         },
@@ -67,7 +68,6 @@ class AllPopularMovieWidget extends ConsumerWidget {
                               color: whiteColor,
                               fontWeight: FontWeight.bold,
                             ),
-                            // overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             'Rating: ${(movie.voteAverage! * 10).toStringAsFixed(0)}%',
@@ -99,8 +99,8 @@ class AllPopularMovieWidget extends ConsumerWidget {
   Widget _loadDataMovie() {
     return Container(
       width: 120,
-      margin: const EdgeInsets.only(right: 8),
-      child: Column(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CardLoading(
@@ -108,21 +108,30 @@ class AllPopularMovieWidget extends ConsumerWidget {
             width: 120,
             borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(height: 5),
-          CardLoading(
-            height: 10,
-            width: 120,
-            borderRadius: BorderRadius.circular(5),
-            margin: const EdgeInsets.only(bottom: 3),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CardLoading(
+                  height: 15,
+                  width: 120,
+                  borderRadius: BorderRadius.circular(5),
+                  margin: const EdgeInsets.only(bottom: 3),
+                ),
+                CardLoading(
+                  margin: const EdgeInsets.only(bottom: 3),
+                  height: 10,
+                  width: 80,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                CardLoading(
+                    height: 10,
+                    width: 100,
+                    borderRadius: BorderRadius.circular(5)),
+              ],
+            ),
           ),
-          CardLoading(
-            margin: const EdgeInsets.only(bottom: 3),
-            height: 10,
-            width: 80,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          CardLoading(
-              height: 10, width: 100, borderRadius: BorderRadius.circular(5)),
         ],
       ),
     );

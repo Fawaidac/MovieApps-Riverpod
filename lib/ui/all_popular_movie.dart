@@ -1,4 +1,4 @@
-import 'package:fininite_riverpod/core/controller/movie_controller.dart';
+import 'package:fininite_riverpod/core/controller/popular_movie_controller.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/widget_all_popular_movie.dart';
@@ -16,7 +16,7 @@ class _AllPopularMovieState extends ConsumerState<AllPopularMovie> {
   @override
   void initState() {
     super.initState();
-    ref.read(movieControllerProvider.notifier).fetchAllPopularMovies();
+    ref.read(popularControllerProvider.notifier).fetchPopularMovies();
   }
 
   @override

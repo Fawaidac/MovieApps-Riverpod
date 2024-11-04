@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:fininite_riverpod/core/model/movie_model.dart';
+import 'package:fininite_riverpod/utils/api_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 class MovieRepository {
@@ -47,3 +49,8 @@ class MovieRepository {
     }
   }
 }
+
+final movieRepositoryProvider = Provider((ref) => MovieRepository(
+      apiUrl: ApiConfig.apiUrl,
+      token: ApiConfig.token,
+    ));
