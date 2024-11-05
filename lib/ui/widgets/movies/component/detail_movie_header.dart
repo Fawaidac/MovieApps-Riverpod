@@ -7,6 +7,7 @@ import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:fininite_riverpod/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class DetailMovieHeader extends StatelessWidget {
   final DetailMovie detailMovie;
@@ -60,17 +61,17 @@ class DetailMovieHeader extends StatelessWidget {
                             size: 20,
                           )),
                     ),
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: whiteColor.withOpacity(0.3),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.favorite_border,
-                            color: whiteColor,
-                            size: 20,
-                          )),
-                    )
+                    // CircleAvatar(
+                    //   radius: 20,
+                    //   backgroundColor: whiteColor.withOpacity(0.3),
+                    //   child: IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(
+                    //         Icons.favorite_border,
+                    //         color: whiteColor,
+                    //         size: 20,
+                    //       )),
+                    // )
                   ],
                 ),
                 const Spacer(),
@@ -162,7 +163,7 @@ class DetailMovieHeader extends StatelessWidget {
                                     ),
                                   ],
                           ),
-                          const SizedBox(height: 5),
+                          const Gap(5),
                           Text(
                             detailMovie.tagline ?? "",
                             style: AppFonts.poppins(
@@ -170,6 +171,32 @@ class DetailMovieHeader extends StatelessWidget {
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400),
                           ),
+                          // Container(
+                          //   margin: const EdgeInsets.only(top: 10),
+                          //   // width: 150,
+                          //   padding: const EdgeInsets.symmetric(
+                          //       horizontal: 10, vertical: 5),
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(8),
+                          //       border:
+                          //           Border.all(width: 1, color: whiteColor)),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       Icon(
+                          //         Icons.favorite,
+                          //         color: whiteColor,
+                          //         size: 15,
+                          //       ),
+                          //       const Gap(8),
+                          //       Text(
+                          //         "Your Favorite",
+                          //         style: AppFonts.montserrat(
+                          //             fontSize: 12, color: whiteColor),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     ))

@@ -23,6 +23,10 @@ class DetailMovieController extends StateNotifier<DetailMovie?> {
       isLoading = false;
     }
   }
+
+  void resetState() {
+    state = null;
+  }
 }
 
 final detailControllerProvider =

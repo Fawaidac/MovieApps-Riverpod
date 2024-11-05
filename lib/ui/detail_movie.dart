@@ -28,6 +28,10 @@ class _DetailMovieScreenState extends ConsumerState<DetailMovieScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(detailControllerProvider.notifier).resetState();
+      ref.read(detailVideosControllerProvider.notifier).resetState();
+      // ref.read(recommendationControllerProvider.notifier).resetState();
+
       ref
           .read(detailControllerProvider.notifier)
           .getDetailMovie(widget.movieId);
@@ -202,7 +206,6 @@ class _DetailMovieScreenState extends ConsumerState<DetailMovieScreen> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
                                 radius: 30,

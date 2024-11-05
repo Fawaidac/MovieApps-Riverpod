@@ -40,6 +40,10 @@ class RecommendationMovieController extends StateNotifier<Movie?> {
       isLoading = false;
     }
   }
+
+  void resetState() {
+    state = null;
+  }
 }
 
 final recommendationControllerProvider =

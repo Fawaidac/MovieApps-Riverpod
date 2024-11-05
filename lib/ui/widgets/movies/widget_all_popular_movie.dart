@@ -1,11 +1,11 @@
 import 'package:card_loading/card_loading.dart';
 import 'package:fininite_riverpod/core/controller/popular_movie_controller.dart';
-import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/utils/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class AllPopularMovieWidget extends ConsumerWidget {
   const AllPopularMovieWidget({super.key});
@@ -42,13 +42,29 @@ class AllPopularMovieWidget extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     movie.posterPath != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              '${ApiConfig.imageUrl}${movie.posterPath}',
-                              fit: BoxFit.cover,
-                              width: 120,
-                              height: 170,
+                        ? Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 120,
+                            height: 170,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        '${ApiConfig.imageUrl}${movie.posterPath}'),
+                                    fit: BoxFit.cover)),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: primaryColor.withOpacity(0.8),
+                                child: Text(
+                                  '${index + 1}',
+                                  style: AppFonts.montserrat(
+                                      fontSize: 12,
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
                           )
                         : CardLoading(
@@ -76,12 +92,15 @@ class AllPopularMovieWidget extends ConsumerWidget {
                               color: whiteColor,
                             ),
                           ),
+                          const Gap(10),
                           Text(
-                            formatDate(movie.releaseDate ?? ""),
+                            movie.overview ?? "",
                             style: AppFonts.montserrat(
                               fontSize: 12,
                               color: whiteColor,
                             ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
