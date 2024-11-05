@@ -1,9 +1,11 @@
 import 'package:card_loading/card_loading.dart';
 import 'package:fininite_riverpod/core/controller/detail_movie_controller.dart';
 import 'package:fininite_riverpod/core/controller/detail_video_movie_controller.dart';
+import 'package:fininite_riverpod/core/controller/recommendation_movie_controller.dart';
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
 import 'package:fininite_riverpod/ui/widgets/movies/component/detail_movie_header.dart';
+import 'package:fininite_riverpod/ui/widgets/movies/widget_recommendation_movie.dart';
 import 'package:fininite_riverpod/utils/date_formatter.dart';
 import 'package:fininite_riverpod/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,9 @@ class _DetailMovieScreenState extends ConsumerState<DetailMovieScreen> {
       ref
           .read(detailVideosControllerProvider.notifier)
           .getVideoDetailMovie(widget.movieId);
+      ref
+          .read(recommendationControllerProvider.notifier)
+          .fetchRecommendationMovies(widget.movieId);
     });
   }
 
@@ -232,9 +237,12 @@ class _DetailMovieScreenState extends ConsumerState<DetailMovieScreen> {
                                 color: whiteColor,
                                 fontWeight: FontWeight.normal),
                           ),
+                          WidgetRecommendationMovie(
+                            movieId: widget.movieId,
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
         ),

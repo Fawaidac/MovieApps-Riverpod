@@ -76,6 +76,19 @@ class MovieRepository {
       throw Exception('Failed to load videos detail movies');
     }
   }
+
+  Future<Movie> fetchRecommendationMovie(int movieId, int page) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/$movieId/recommendations?language=en-US&page=$page'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return Movie.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load recommendation detail movies');
+    }
+  }
 }
 
 final movieRepositoryProvider = Provider((ref) => MovieRepository(
