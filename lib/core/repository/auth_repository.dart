@@ -14,4 +14,18 @@ class AuthRepository {
     final user = User(username: username, email: email, password: password);
     await databaseHelper.insertUser(user);
   }
+
+  Future<User?> getUserByEmail(String email) async {
+    final db = await databaseHelper.database;
+    final maps = await db.query(
+      'users',
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+
+    if (maps.isNotEmpty) {
+      return User.fromMap(maps.first);
+    }
+    return null;
+  }
 }
