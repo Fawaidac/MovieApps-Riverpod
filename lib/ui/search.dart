@@ -1,5 +1,6 @@
 import 'package:fininite_riverpod/core/themes/colors.dart';
 import 'package:fininite_riverpod/core/themes/fonts.dart';
+import 'package:fininite_riverpod/ui/detail_movie.dart';
 import 'package:fininite_riverpod/ui/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,6 +58,14 @@ class SearchScreen extends ConsumerWidget {
                       }
                       final movie = searchResults.results![index];
                       return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailMovieScreen(movieId: movie.id ?? 0),
+                              ));
+                        },
                         leading: movie.posterPath != null
                             ? Image.network(
                                 'https://image.tmdb.org/t/p/w200${movie.posterPath}',

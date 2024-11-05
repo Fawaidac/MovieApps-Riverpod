@@ -37,7 +37,7 @@ class PopularMovieWidget extends ConsumerWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AllPopularMovie(),
+                      builder: (context) => const AllPopularMovie(),
                     ));
               },
               child: Text(

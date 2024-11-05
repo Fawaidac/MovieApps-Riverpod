@@ -41,7 +41,7 @@ class WidgetTopHome extends StatelessWidget {
                   builder: (context) => ProfileScreen(),
                 ));
           },
-          child: CircleAvatar(
+          child: const CircleAvatar(
             radius: 30,
             backgroundImage: AssetImage('images/killua.jpg'),
           ),

@@ -75,7 +75,7 @@ class WidgetFormRegister extends ConsumerWidget {
             Fluttertoast.showToast(msg: "Registered Successfully");
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
             );
           } else {
             Fluttertoast.showToast(

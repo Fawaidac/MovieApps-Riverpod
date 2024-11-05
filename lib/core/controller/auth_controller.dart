@@ -15,14 +15,11 @@ class AuthController {
   Future<void> updateUserData(String name, String email) async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Clear old data
     await prefs.clear();
 
-    // Save new data
     await prefs.setString('username', name);
     await prefs.setString('email', email);
 
-    // Update the state
     ref.read(authStateProvider.notifier).state =
         User(username: name, email: email);
   }
@@ -32,8 +29,7 @@ class AuthController {
     final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
     if (isLoggedIn) {
-      // Assuming we have a method to get user data by email
-      final email = prefs.getString('userEmail');
+      final email = prefs.getString('email');
       if (email != null) {
         final user = await authRepository.getUserByEmail(email);
         if (user != null) {
@@ -49,7 +45,7 @@ class AuthController {
       ref.read(authStateProvider.notifier).state = user;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('userEmail', email);
+      await prefs.setString('email', email);
       return true;
     }
     return false;
