@@ -22,6 +22,7 @@ dependencies:
   youtube_player_flutter: any
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -31,4 +32,5 @@ dev_dependencies:
 flutter:
   assets:
     - images/
+    - .env
   uses-material-design: true
